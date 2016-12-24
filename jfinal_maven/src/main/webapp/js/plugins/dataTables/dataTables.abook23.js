@@ -13,12 +13,14 @@ function dataTable(dataTable, url, columns, dataSrc, rowCallback) {
 			url: url,
 			dataSrc: dataSrc
 		},
+        searchDelay: 800,
 		columns: getDataTableColumns(columns),
 		"rowCallback": function(row, data, index) {
 			if(rowCallback != null)
 				rowCallback(row, data, index);
 		}
 	});
+    dataTableError(table);
 	return table;
 }
 
@@ -34,6 +36,7 @@ function dataTableByServer(dataTable, url, columns, rowCallback) {
 		ordering: false, //排序
 		serverSide: true, //开启服务器模式
 		ajax: url,
+        searchDelay: 800,
 		columns: getDataTableColumns(columns),
 		"rowCallback": function(row, data, index) {
 			if(rowCallback != null)
@@ -46,6 +49,7 @@ function dataTableByServer(dataTable, url, columns, rowCallback) {
 			//$('td:eq(0)', row).css('display', 'none');
 		}
 	});
+    dataTableError(table);
 	return table;
 }
 
@@ -65,6 +69,12 @@ function getDataTableColumns(columns) {
 		};
 	});
 	return _columns;
+}
+
+function dataTableError(dataTable) {
+    $.fn.dataTable.ext.errMode = function(s,h,m){
+    	layer.msg("获取数据失败")
+	}
 }
 
 //获取某一个点击Id
