@@ -54,7 +54,7 @@ public class UserController extends BaseController {
 
 	public void list2() {
 		DatabTable databTable =  getDataTable();
-		String search="";
+		String search=databTable.getSearchValue();
 		User user = getSessionUer();
 		String userName = user.getUserName();
 		if ("admin".equals(userName) || "system".equals(userName)) {
@@ -67,6 +67,8 @@ public class UserController extends BaseController {
 				databTable.setRecordsTotal(page.getTotalRow());
 			}else {
 				Page<UserInfo> page = UserService.listLike(pageNumber, pageSize,search);
+				databTable.setData(page.getList());
+				databTable.setRecordsTotal(page.getTotalRow());
 			}
 			renderJson(databTable.getResponseData());
 		} else {
