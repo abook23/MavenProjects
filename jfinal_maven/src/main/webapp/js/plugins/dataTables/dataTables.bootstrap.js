@@ -1,9 +1,21 @@
 /* Set the defaults for DataTables initialisation */
 $.extend(true, $.fn.dataTable.defaults, {
-    //"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>" + "t" + "<'row'<'col-sm-6'i><'col-sm-6'p>>",
-
+    "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>" + "t" + "<'row'<'col-sm-6'i><'col-sm-6'p>>",
     "oLanguage": {
-        "sLengthMenu": "每页 _MENU_ 条记录"
+        "sSearch": "快速搜索:",
+        "bAutoWidth": true,
+        "sLengthMenu": "每页显示 _MENU_ 条记录",
+        "sZeroRecords": "Nothing found - 没有记录",
+        "sInfo": "_START_ 到 _END_ 条,共 _TOTAL_ 条",
+        "sInfoEmpty": "显示0条记录",
+        "sInfoFiltered": "(从 _MAX_ 条中过滤)",
+        "sProcessing":"<div style=''><img src='../static/img/loader.gif'><span>加载中...</span></div>",
+        "oPaginate": {
+            "sPrevious": "上一页",
+            "sNext":     "下一页",
+            "sLast":     "最后一页",
+            "sFirst":    "第一页"
+        }
     }
 });
 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body style="background: white;">
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>角色详情</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="">角色管理</a>
+            </li>
+            <li>
+                <strong>新增</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-offset-6 col-sm-2">
+        <button id="add" type="button" class="btn btn-primary btn-sm" onclick="submit()">提交</button>
+    </div>
+</div>
+<div style="margin-bottom: 20px;"></div>
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+        <form id="InfoFrom" class="form-horizontal" role="form">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">父级角色</label>
+                        <div class="col-sm-9">
+                            <select id="selectRole" class="form-control m-b" name="role.pId">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">角色名称</label>
+                        <div class="col-sm-9">
+                            <input name="role.name" value="${(role.name)!}" class="form-control" type="text"
+                                   placeholder="角色名称" required="" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">描述</label>
+                        <div class="col-sm-9">
+                            <input name="role._describe" value="${(userInfo._describe)!}" class="form-control"
+                                   type="tel" placeholder="描述" required="" aria-required="true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- jQuery Validation plugin javascript-->
+<script src="/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/js/plugins/validate/messages_zh.min.js"></script>
+<script src="/page/role/role.js"></script>
+<script>
+    //以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
+    $.validator.setDefaults({
+        highlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function (element) {
+            element.closest('.form-group').removeClass('has-error').addClass('has-success');
+        },
+        //errorElement: "span",
+        errorClass: "help-block m-b-none",
+        validClass: "help-block m-b-none"
+    });
+    //以下为官方示例
+    $().ready(function () {
+    	selectOption("#selectRole","/role/listAll");
+        $("#InfoFrom").validate({
+            submitHandler: function () {
+                add();
+            }
+        });
+       
+    });
+    function submit() {
+        $('#InfoFrom').submit();
+    }
+</script>
+
+</body>
+
+</html>

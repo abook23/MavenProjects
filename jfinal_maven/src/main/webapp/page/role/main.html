@@ -7,7 +7,7 @@
 					<h5>系统管理/用户管理</h5>
 				</div>
 				<div class="col-xs-6 col-md-2">
-					<button id="add" type="button" class="btn btn-primary btn-sm" onclick="add()">添加</button>
+					<button id="add" type="button" class="btn btn-primary btn-sm" onclick="addPage()">添加</button>
 				</div>
 			</div>
 		</div>
@@ -40,16 +40,15 @@
 <script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script src="../../js/plugins/dataTables/dataTables.abook23.js"></script>
-
-<script src="/page/user/user.js"></script>
 <!-- Page-Level Scripts -->
+<script src="/page/role/role.js" />
 
 <script>
 	$(document).ready(function() {
-		var table = dataTableByServer(".dataTables-example", "/role/listData", "userID,_describe,status");
+		var table = dataTableByServer(".dataTables-example", "/role/list", "name,_describe,status");
 		$('.dataTables-example').on("dblclick", 'tr', function() {
 			var rowData = table.row(this).data();
-			info(rowData.userId);
+			itemPage(rowData.roleId);
 		});
 	});
 </script>
