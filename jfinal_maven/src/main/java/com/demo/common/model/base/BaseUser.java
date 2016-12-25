@@ -9,35 +9,35 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implements IBean {
 
-	public void setUserId(String userId) {
+	public void setUserId(java.lang.String userId) {
 		set("userId", userId);
 	}
 
-	public String getUserId() {
+	public java.lang.String getUserId() {
 		return get("userId");
 	}
 
-	public void setUserName(String userName) {
+	public void setUserName(java.lang.String userName) {
 		set("userName", userName);
 	}
 
-	public String getUserName() {
+	public java.lang.String getUserName() {
 		return get("userName");
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(java.lang.String password) {
 		set("password", password);
 	}
 
-	public String getPassword() {
+	public java.lang.String getPassword() {
 		return get("password");
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(java.lang.Integer status) {
 		set("status", status);
 	}
 
-	public Integer getStatus() {
+	public java.lang.Integer getStatus() {
 		return get("status");
 	}
 

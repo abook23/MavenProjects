@@ -9,27 +9,27 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseAppversions<M extends BaseAppversions<M>> extends Model<M> implements IBean {
 
-	public void setResId(String resId) {
+	public void setResId(java.lang.String resId) {
 		set("resId", resId);
 	}
 
-	public String getResId() {
+	public java.lang.String getResId() {
 		return get("resId");
 	}
 
-	public void setName(String name) {
+	public void setName(java.lang.String name) {
 		set("name", name);
 	}
 
-	public String getName() {
+	public java.lang.String getName() {
 		return get("name");
 	}
 
-	public void setAppversions(String appversions) {
+	public void setAppversions(java.lang.String appversions) {
 		set("appversions", appversions);
 	}
 
-	public String getAppversions() {
+	public java.lang.String getAppversions() {
 		return get("appversions");
 	}
 
@@ -41,11 +41,11 @@ public abstract class BaseAppversions<M extends BaseAppversions<M>> extends Mode
 		return get("createTime");
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(java.lang.Integer status) {
 		set("status", status);
 	}
 
-	public Integer getStatus() {
+	public java.lang.Integer getStatus() {
 		return get("status");
 	}
 

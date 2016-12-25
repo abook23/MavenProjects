@@ -29,7 +29,7 @@ public class MenuController extends BaseController {
 	}
 
 	@Override
-	public void updat() {
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}

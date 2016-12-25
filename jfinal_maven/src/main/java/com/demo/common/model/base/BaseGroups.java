@@ -9,35 +9,35 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseGroups<M extends BaseGroups<M>> extends Model<M> implements IBean {
 
-	public void setGrpId(String grpId) {
+	public void setGrpId(java.lang.String grpId) {
 		set("grpId", grpId);
 	}
 
-	public String getGrpId() {
+	public java.lang.String getGrpId() {
 		return get("grpId");
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(java.lang.String userId) {
 		set("userId", userId);
 	}
 
-	public String getUserId() {
+	public java.lang.String getUserId() {
 		return get("userId");
 	}
 
-	public void setParentId(String parentId) {
+	public void setParentId(java.lang.String parentId) {
 		set("parentId", parentId);
 	}
 
-	public String getParentId() {
+	public java.lang.String getParentId() {
 		return get("parentId");
 	}
 
-	public void setName(String name) {
+	public void setName(java.lang.String name) {
 		set("name", name);
 	}
 
-	public String getName() {
+	public java.lang.String getName() {
 		return get("name");
 	}
 
@@ -49,11 +49,11 @@ public abstract class BaseGroups<M extends BaseGroups<M>> extends Model<M> imple
 		return get("dateTime");
 	}
 
-	public void setFlag(String flag) {
+	public void setFlag(java.lang.String flag) {
 		set("flag", flag);
 	}
 
-	public String getFlag() {
+	public java.lang.String getFlag() {
 		return get("flag");
 	}
 

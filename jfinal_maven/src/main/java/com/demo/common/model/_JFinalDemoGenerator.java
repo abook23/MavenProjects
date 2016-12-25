@@ -23,20 +23,16 @@ public class _JFinalDemoGenerator {
 	}
 	
 	public static void main(String[] args) {
+
+		// base model 文件保存路径
+		String baseModelOutputDir = PathKit.getWebRootPath() + "/src/main/java/com/demo/common/model/base";
 		// base model 所使用的包名
 		String baseModelPackageName = "com.demo.common.model.base";
-		// base model 文件保存路径
-		String baseModelOutputDir = PathKit.getWebRootPath() + "/../src/com/demo/common/model/base";
-		
 		// model 所使用的包名 (MappingKit 默认使用的包名)
 		String modelPackageName = "com.demo.common.model";
 		// model 文件保存路径 (MappingKit 与 DataDictionary 文件默认保存路径)
 		String modelOutputDir = baseModelOutputDir + "/..";
 
-		for (int i = 0; i < 100; i++) {
-
-		}
-		
 		// 创建生成器
 		Generator gernerator = new Generator(getDataSource(), baseModelPackageName, baseModelOutputDir, modelPackageName, modelOutputDir);
 		// 添加不需要生成的表名

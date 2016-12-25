@@ -1,21 +1,18 @@
 package com.demo.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.jetty.util.ajax.JSON;
-
 import com.demo.Key;
 import com.demo.common.model.MsgBean;
 import com.demo.common.model.User;
 import com.demo.common.model.UserInfo;
 import com.demo.controller.base.BaseController;
-import com.demo.controller.model.DatabTable;
+import com.demo.controller.model.DataTable;
 import com.demo.interceptor.BaseInterceptor;
 import com.demo.service.UserService;
 import com.demo.util.IdUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Page;
+
+import java.util.List;
 
 public class UserController extends BaseController {
 
@@ -31,6 +28,7 @@ public class UserController extends BaseController {
 		if (user != null) {
 			user.setPassword("******");
 			setSessionAttr(Key.KEY_SESSION_USER, user);
+			msgBean.setStatus(1);
 			msgBean.setMsg("欢迎" + user.getUserName());
 		} else {
 			msgBean.setStatus(0);
@@ -53,7 +51,7 @@ public class UserController extends BaseController {
 	}
 
 	public void list2() {
-		DatabTable databTable =  getDataTable();
+		DataTable databTable =  getDataTable();
 		String search=databTable.getSearchValue();
 		User user = getSessionUer();
 		String userName = user.getUserName();
@@ -163,8 +161,14 @@ public class UserController extends BaseController {
 	}
 
 	@Override
-	public void updat() {
+	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void findByRoleId(){
+		String roleId = getPara("roleId");
+		List<UserInfo> userInfos = UserService.findByRoleId(roleId);
+		renderJson(userInfos);
 	}
 }

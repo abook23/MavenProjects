@@ -3,7 +3,7 @@ package com.demo.common.model;
 public class MsgBean{
 
 	private String msg;
-	private int status = 1;
+	private int status = 0;
 	private Object data;
 	
 	public String getMsg() {

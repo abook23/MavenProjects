@@ -1,14 +1,13 @@
 package com.demo.controller.base;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.demo.Key;
 import com.demo.common.model.User;
 import com.demo.controller.model.Column;
-import com.demo.controller.model.DatabTable;
+import com.demo.controller.model.DataTable;
 import com.jfinal.core.Controller;
 
 public abstract class BaseController extends Controller {
@@ -17,9 +16,9 @@ public abstract class BaseController extends Controller {
 		return getSessionAttr(Key.KEY_SESSION_USER);
 	}
 
-	public DatabTable getDataTable() {
+	public DataTable getDataTable() {
 		
-		DatabTable databTable = new DatabTable();
+		DataTable databTable = new DataTable();
 		
 		databTable.setDraw(getParaToInt("draw",0));
 		databTable.setStart(getParaToInt("start",10));
@@ -56,7 +55,7 @@ public abstract class BaseController extends Controller {
 
 	abstract public void list();
 
-	abstract public void updat();
+	abstract public void update();
 
 	abstract public void delete();
 }

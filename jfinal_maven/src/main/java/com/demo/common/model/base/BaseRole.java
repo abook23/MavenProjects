@@ -9,36 +9,52 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseRole<M extends BaseRole<M>> extends Model<M> implements IBean {
 
-	public void setRoleId(String roleId) {
+	public void setRoleId(java.lang.String roleId) {
 		set("roleId", roleId);
 	}
 
-	public String getRoleId() {
+	public java.lang.String getRoleId() {
 		return get("roleId");
 	}
 
-	public void setName(String name) {
+	public void setPId(java.lang.String pId) {
+		set("pId", pId);
+	}
+
+	public java.lang.String getPId() {
+		return get("pId");
+	}
+
+	public void setName(java.lang.String name) {
 		set("name", name);
 	}
 
-	public String getName() {
+	public java.lang.String getName() {
 		return get("name");
 	}
 
-	public void setDescribe(String Describe) {
+	public void setDescribe(java.lang.String Describe) {
 		set("_describe", Describe);
 	}
 
-	public String getDescribe() {
+	public java.lang.String getDescribe() {
 		return get("_describe");
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(java.lang.Integer status) {
 		set("status", status);
 	}
 
-	public Integer getStatus() {
+	public java.lang.Integer getStatus() {
 		return get("status");
+	}
+
+	public void setCreateTime(java.util.Date createTime) {
+		set("createTime", createTime);
+	}
+
+	public java.util.Date getCreateTime() {
+		return get("createTime");
 	}
 
 }

@@ -9,35 +9,35 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseUserGroup<M extends BaseUserGroup<M>> extends Model<M> implements IBean {
 
-	public void setId(Integer id) {
+	public void setId(java.lang.Integer id) {
 		set("id", id);
 	}
 
-	public Integer getId() {
+	public java.lang.Integer getId() {
 		return get("id");
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(java.lang.String userId) {
 		set("userId", userId);
 	}
 
-	public String getUserId() {
+	public java.lang.String getUserId() {
 		return get("userId");
 	}
 
-	public void setGrpId(String grpId) {
+	public void setGrpId(java.lang.String grpId) {
 		set("grpId", grpId);
 	}
 
-	public String getGrpId() {
+	public java.lang.String getGrpId() {
 		return get("grpId");
 	}
 
-	public void setAliasName(String aliasName) {
+	public void setAliasName(java.lang.String aliasName) {
 		set("aliasName", aliasName);
 	}
 
-	public String getAliasName() {
+	public java.lang.String getAliasName() {
 		return get("aliasName");
 	}
 

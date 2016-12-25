@@ -1,10 +1,12 @@
 package com.demo.controller.model;
 
+import com.jfinal.plugin.activerecord.Page;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DatabTable {
+public class DataTable {
 	private int draw;
 	private int start;
 	private int length;
@@ -18,8 +20,6 @@ public class DatabTable {
 
 	/**
 	 * dataTable 数据封装
-	 * @param data			返回给客户端的list数据
-	 * @param recordsTotal	一共有多少条数据
 	 */
 	public Map<String, Object> getResponseData() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -32,6 +32,11 @@ public class DatabTable {
 	
 	public void setData(List<?> data) {
 		this.data = data;
+	}
+
+	public void setData(Page<?> page) {
+		this.data = page.getList();
+		this.recordsTotal = page.getTotalRow();
 	}
 
 	public void setRecordsTotal(int recordsTotal) {

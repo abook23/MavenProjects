@@ -9,67 +9,67 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseUserInfo<M extends BaseUserInfo<M>> extends Model<M> implements IBean {
 
-	public void setUserId(String userId) {
+	public void setUserId(java.lang.String userId) {
 		set("userId", userId);
 	}
 
-	public String getUserId() {
+	public java.lang.String getUserId() {
 		return get("userId");
 	}
 
-	public void setGender(String gender) {
+	public void setGender(java.lang.String gender) {
 		set("gender", gender);
 	}
 
-	public String getGender() {
+	public java.lang.String getGender() {
 		return get("gender");
 	}
 
-	public void setAge(Integer age) {
+	public void setAge(java.lang.Integer age) {
 		set("age", age);
 	}
 
-	public Integer getAge() {
+	public java.lang.Integer getAge() {
 		return get("age");
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(java.lang.String phone) {
 		set("phone", phone);
 	}
 
-	public String getPhone() {
+	public java.lang.String getPhone() {
 		return get("phone");
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(java.lang.String email) {
 		set("email", email);
 	}
 
-	public String getEmail() {
+	public java.lang.String getEmail() {
 		return get("email");
 	}
 
-	public void setQq(String qq) {
+	public void setQq(java.lang.String qq) {
 		set("qq", qq);
 	}
 
-	public String getQq() {
+	public java.lang.String getQq() {
 		return get("qq");
 	}
 
-	public void setHeadId(String headId) {
+	public void setHeadId(java.lang.String headId) {
 		set("headId", headId);
 	}
 
-	public String getHeadId() {
+	public java.lang.String getHeadId() {
 		return get("headId");
 	}
 
-	public void setName(String name) {
+	public void setName(java.lang.String name) {
 		set("name", name);
 	}
 
-	public String getName() {
+	public java.lang.String getName() {
 		return get("name");
 	}
 
@@ -81,35 +81,35 @@ public abstract class BaseUserInfo<M extends BaseUserInfo<M>> extends Model<M> i
 		return get("createTime");
 	}
 
-	public void setHeadP(String headP) {
+	public void setHeadP(java.lang.String headP) {
 		set("headP", headP);
 	}
 
-	public String getHeadP() {
+	public java.lang.String getHeadP() {
 		return get("headP");
 	}
 
-	public void setID(String ID) {
+	public void setID(java.lang.String ID) {
 		set("ID", ID);
 	}
 
-	public String getID() {
+	public java.lang.String getID() {
 		return get("ID");
 	}
 
-	public void setIDP0(String IDP0) {
+	public void setIDP0(java.lang.String IDP0) {
 		set("IDP0", IDP0);
 	}
 
-	public String getIDP0() {
+	public java.lang.String getIDP0() {
 		return get("IDP0");
 	}
 
-	public void setIDP1(String IDP1) {
+	public void setIDP1(java.lang.String IDP1) {
 		set("IDP1", IDP1);
 	}
 
-	public String getIDP1() {
+	public java.lang.String getIDP1() {
 		return get("IDP1");
 	}
 

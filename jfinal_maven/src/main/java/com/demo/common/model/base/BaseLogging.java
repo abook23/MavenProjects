@@ -9,19 +9,19 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseLogging<M extends BaseLogging<M>> extends Model<M> implements IBean {
 
-	public void setLogId(String logId) {
+	public void setLogId(java.lang.String logId) {
 		set("logId", logId);
 	}
 
-	public String getLogId() {
+	public java.lang.String getLogId() {
 		return get("logId");
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(java.lang.String userId) {
 		set("userId", userId);
 	}
 
-	public String getUserId() {
+	public java.lang.String getUserId() {
 		return get("userId");
 	}
 
@@ -33,27 +33,27 @@ public abstract class BaseLogging<M extends BaseLogging<M>> extends Model<M> imp
 		return get("dateTime");
 	}
 
-	public void setType(String type) {
+	public void setType(java.lang.String type) {
 		set("type", type);
 	}
 
-	public String getType() {
+	public java.lang.String getType() {
 		return get("type");
 	}
 
-	public void setIp(String ip) {
+	public void setIp(java.lang.String ip) {
 		set("ip", ip);
 	}
 
-	public String getIp() {
+	public java.lang.String getIp() {
 		return get("ip");
 	}
 
-	public void setAddr(String addr) {
+	public void setAddr(java.lang.String addr) {
 		set("addr", addr);
 	}
 
-	public String getAddr() {
+	public java.lang.String getAddr() {
 		return get("addr");
 	}
 

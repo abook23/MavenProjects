@@ -9,43 +9,43 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseResources<M extends BaseResources<M>> extends Model<M> implements IBean {
 
-	public void setResId(String resId) {
+	public void setResId(java.lang.String resId) {
 		set("resId", resId);
 	}
 
-	public String getResId() {
+	public java.lang.String getResId() {
 		return get("resId");
 	}
 
-	public void setName(String name) {
+	public void setName(java.lang.String name) {
 		set("name", name);
 	}
 
-	public String getName() {
+	public java.lang.String getName() {
 		return get("name");
 	}
 
-	public void setPath(String path) {
+	public void setPath(java.lang.String path) {
 		set("path", path);
 	}
 
-	public String getPath() {
+	public java.lang.String getPath() {
 		return get("path");
 	}
 
-	public void setType(String type) {
+	public void setType(java.lang.String type) {
 		set("type", type);
 	}
 
-	public String getType() {
+	public java.lang.String getType() {
 		return get("type");
 	}
 
-	public void setMd5(String md5) {
+	public void setMd5(java.lang.String md5) {
 		set("md5", md5);
 	}
 
-	public String getMd5() {
+	public java.lang.String getMd5() {
 		return get("md5");
 	}
 
@@ -57,11 +57,11 @@ public abstract class BaseResources<M extends BaseResources<M>> extends Model<M>
 		return get("dateTime");
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(java.lang.Integer status) {
 		set("status", status);
 	}
 
-	public Integer getStatus() {
+	public java.lang.Integer getStatus() {
 		return get("status");
 	}
 

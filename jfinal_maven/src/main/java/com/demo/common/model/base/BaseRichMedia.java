@@ -9,51 +9,51 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseRichMedia<M extends BaseRichMedia<M>> extends Model<M> implements IBean {
 
-	public void setRmId(String rmId) {
+	public void setRmId(java.lang.String rmId) {
 		set("rmId", rmId);
 	}
 
-	public String getRmId() {
+	public java.lang.String getRmId() {
 		return get("rmId");
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(java.lang.String userId) {
 		set("userId", userId);
 	}
 
-	public String getUserId() {
+	public java.lang.String getUserId() {
 		return get("userId");
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(java.lang.String title) {
 		set("title", title);
 	}
 
-	public String getTitle() {
+	public java.lang.String getTitle() {
 		return get("title");
 	}
 
-	public void setResIds(String resIds) {
+	public void setResIds(java.lang.String resIds) {
 		set("resIds", resIds);
 	}
 
-	public String getResIds() {
+	public java.lang.String getResIds() {
 		return get("resIds");
 	}
 
-	public void setContent(String content) {
+	public void setContent(java.lang.String content) {
 		set("content", content);
 	}
 
-	public String getContent() {
+	public java.lang.String getContent() {
 		return get("content");
 	}
 
-	public void setReadNumber(Integer readNumber) {
+	public void setReadNumber(java.lang.Integer readNumber) {
 		set("readNumber", readNumber);
 	}
 
-	public Integer getReadNumber() {
+	public java.lang.Integer getReadNumber() {
 		return get("readNumber");
 	}
 
