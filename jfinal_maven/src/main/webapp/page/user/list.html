@@ -40,7 +40,7 @@
 						<table class="table table-striped table-bordered table-hover dataTables-example">
 							<thead>
 								<tr>
-									<th style="display: none;">userId</th>
+									<th>userId</th>
 									<th>name</th>
 									<th>phone</th>
 									<th>email</th>
@@ -60,7 +60,7 @@
 							</tbody>
 							<tfoot>
 								<tr>
-									<th style="display: none;">userId</th>
+									<th>userId</th>
 									<th>name</th>
 									<th>phone</th>
 									<th>email</th>
@@ -114,20 +114,27 @@
 
 <script>
 	$(document).ready(function() {
-		//				$('.dataTables-example').DataTable({
-		//					ajax:{
-		//						url:'/user/list2',
-		//						dataSrc: 'list'
-		//					},
-		//					columns:[
-		//						{data:'userId'},
-		//						{data:'name'},
-		//						{data:'phone'},
-		//						{data:'email'},
-		//						{data:'qq'},
-		//						{data:'createTime'}
-		//					]
-		//				});
+//		$('.dataTables-example').DataTable({
+//			ajax: {
+//				url: '/user/list3',
+//				dataSrc: 'list'
+//			},
+//			"autoWidth": false,
+//			"scrollX": true,
+//			columns: [{
+//				data: 'userId'
+//			}, {
+//				data: 'name'
+//			}, {
+//				data: 'phone'
+//			}, {
+//				data: 'email'
+//			}, {
+//				data: 'qq'
+//			}, {
+//				data: 'createTime'
+//			}]
+//		});
 
 		//				var table = $('.dataTables-example').DataTable({
 		//					ordering: false, //排序
@@ -157,6 +164,7 @@
 		//						//$('td:eq(0)', row).css('display', 'none');
 		//					}
 		//				});
+		
 		var table = dataTableByServer(".dataTables-example", "/user/list2", "userId:false,name,phone,email,qq,createTime");
 
 		$('.dataTables-example').on("dblclick", 'tr', function() {

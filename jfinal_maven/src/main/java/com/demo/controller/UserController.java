@@ -16,159 +16,164 @@ import java.util.List;
 
 public class UserController extends BaseController {
 
-	public void add() {
-		render("add.html");
-	}
+    public void add() {
+        render("add.html");
+    }
 
-	public void login() {
-		MsgBean msgBean = new MsgBean();
+    public void login() {
+        MsgBean msgBean = new MsgBean();
 
-		User user = getModel(User.class, "");
-		user = UserService.login(user.getUserName(), user.getPassword());
-		if (user != null) {
-			user.setPassword("******");
-			setSessionAttr(Key.KEY_SESSION_USER, user);
-			msgBean.setStatus(1);
-			msgBean.setMsg("欢迎" + user.getUserName());
-		} else {
-			msgBean.setStatus(0);
-			msgBean.setMsg("用户名或者密码错误");
-		}
-		renderJson(msgBean);
-	}
+        User user = getModel(User.class, "");
+        user = UserService.login(user.getUserName(), user.getPassword());
+        if (user != null) {
+            user.setPassword("******");
+            setSessionAttr(Key.KEY_SESSION_USER, user);
+            msgBean.setStatus(1);
+            msgBean.setMsg("欢迎" + user.getUserName());
+        } else {
+            msgBean.setStatus(0);
+            msgBean.setMsg("用户名或者密码错误");
+        }
+        renderJson(msgBean);
+    }
 
-	@Before({ BaseInterceptor.class })
-	public void list() {
-		// int page = getAttrForInt("page");
-		// int pageSize = getAttrForInt("pageSize");
-		User user = getSessionUer();
-		String userName = user.getUserName();
-		if ("admin".equals(userName) || "system".equals(userName)) {
-			Page<UserInfo> userInfoPage = UserService.list(1, 10);
-			setAttr("userInfoPage", userInfoPage);
-		}
-		render("list.html");
-	}
+    @Before({BaseInterceptor.class})
+    public void list() {
+        // int page = getAttrForInt("page");
+        // int pageSize = getAttrForInt("pageSize");
+        User user = getSessionUer();
+        String userName = user.getUserName();
+        if ("admin".equals(userName) || "system".equals(userName)) {
+            Page<UserInfo> userInfoPage = UserService.list(1, 10);
+            setAttr("userInfoPage", userInfoPage);
+        }
+        render("list.html");
+    }
 
-	public void list2() {
-		DataTable databTable =  getDataTable();
-		String search=databTable.getSearchValue();
-		User user = getSessionUer();
-		String userName = user.getUserName();
-		if ("admin".equals(userName) || "system".equals(userName)) {
+    public void list3() {
+        Page<UserInfo> userInfoPage = UserService.list(1, 10);
+        renderJson(userInfoPage);
+    }
 
-			int pageNumber = databTable.getStart()/databTable.getLength()+1;
-			int pageSize = databTable.getLength();
-			if (search==null || search.length()==0) {
-				Page<UserInfo> page = UserService.list(pageNumber, pageSize);
-				databTable.setData(page.getList());
-				databTable.setRecordsTotal(page.getTotalRow());
-			}else {
-				Page<UserInfo> page = UserService.listLike(pageNumber, pageSize,search);
-				databTable.setData(page.getList());
-				databTable.setRecordsTotal(page.getTotalRow());
-			}
-			renderJson(databTable.getResponseData());
-		} else {
-			renderJson();
-		}
+    public void list2() {
+        DataTable databTable = getDataTable();
+        String search = databTable.getSearchValue();
+        User user = getSessionUer();
+        String userName = user.getUserName();
+        if ("admin".equals(userName) || "system".equals(userName)) {
 
-	}
+            int pageNumber = databTable.getStart() / databTable.getLength() + 1;
+            int pageSize = databTable.getLength();
+            if (search == null || search.length() == 0) {
+                Page<UserInfo> page = UserService.list(pageNumber, pageSize);
+                databTable.setData(page.getList());
+                databTable.setRecordsTotal(page.getTotalRow());
+            } else {
+                Page<UserInfo> page = UserService.listLike(pageNumber, pageSize, search);
+                databTable.setData(page.getList());
+                databTable.setRecordsTotal(page.getTotalRow());
+            }
+            renderJson(databTable.getResponseData());
+        } else {
+            renderJson();
+        }
 
-	@Before({ BaseInterceptor.class })
-	public void edit() {
+    }
 
-		MsgBean msgBean = new MsgBean();
+    @Before({BaseInterceptor.class})
+    public void edit() {
 
-		User user = getModel(User.class);
-		UserInfo userInfo = getModel(UserInfo.class);
+        MsgBean msgBean = new MsgBean();
 
-		if ("******".equals(user.getPassword())) {
-			user.setPassword(null);
-		}
+        User user = getModel(User.class);
+        UserInfo userInfo = getModel(UserInfo.class);
 
-		if (user.getUserId() == null) {
-			user.setUserId(IdUtils.getId());
-			user.setUserName(userInfo.getName());
+        if ("******".equals(user.getPassword())) {
+            user.setPassword(null);
+        }
 
-			userInfo.setUserId(user.getUserId());
-			boolean b = user.save();
-			boolean b2 = userInfo.save();
-			if (b && b2) {
-				msgBean.setStatus(1);
-				msgBean.setMsg("新增成功");
-			} else {
-				user.delete();
-				userInfo.delete();
+        if (user.getUserId() == null) {
+            user.setUserId(IdUtils.getId());
+            user.setUserName(userInfo.getName());
 
-				msgBean.setStatus(0);
-				msgBean.setMsg("失败成功");
-			}
-		} else {
+            userInfo.setUserId(user.getUserId());
+            boolean b = user.save();
+            boolean b2 = userInfo.save();
+            if (b && b2) {
+                msgBean.setStatus(1);
+                msgBean.setMsg("新增成功");
+            } else {
+                user.delete();
+                userInfo.delete();
 
-			/**
-			 * system 可以修改所以用户的密码 普通用户只能修改本用户的密码
-			 */
-			if ("system".equals(getSessionUer().getUserName())
-					|| getSessionUer().getUserId().equals(user.getUserId())) {
-				user.update();
-				userInfo.setUserId(user.getUserId());
-				boolean b = userInfo.update();
-				if (b) {
-					msgBean.setStatus(1);
-					msgBean.setMsg("更新成功");
-				} else {
-					msgBean.setStatus(0);
-					msgBean.setMsg("更新失败");
-				}
-			} else {
-				msgBean.setStatus(0);
-				msgBean.setMsg("权限不足,不能修改他人信息");
-			}
-		}
-		renderJson(msgBean);
-	}
+                msgBean.setStatus(0);
+                msgBean.setMsg("失败成功");
+            }
+        } else {
 
-	@Before({ BaseInterceptor.class })
-	public void info() {
-		String id = getPara("id");
-		int type = getPara("type") == null ? 0 : getParaToInt("type");
-		UserInfo userInfo = UserInfo.dao.findById(id);
-		User user = User.dao.findById(id);
-		user.setPassword("******");
-		setAttr("userInfo", userInfo);
-		setAttr("user", user);
-		if (type == 0) {
-			render("info.html");
-		} else {
-			render("add.html");
-		}
-	}
+            /**
+             * system 可以修改所以用户的密码 普通用户只能修改本用户的密码
+             */
+            if ("system".equals(getSessionUer().getUserName())
+                    || getSessionUer().getUserId().equals(user.getUserId())) {
+                user.update();
+                userInfo.setUserId(user.getUserId());
+                boolean b = userInfo.update();
+                if (b) {
+                    msgBean.setStatus(1);
+                    msgBean.setMsg("更新成功");
+                } else {
+                    msgBean.setStatus(0);
+                    msgBean.setMsg("更新失败");
+                }
+            } else {
+                msgBean.setStatus(0);
+                msgBean.setMsg("权限不足,不能修改他人信息");
+            }
+        }
+        renderJson(msgBean);
+    }
 
-	@Before({ BaseInterceptor.class })
-	public void delete() {
-		MsgBean msgBean = new MsgBean();
-		String id = getPara("id");
-		boolean b = UserInfo.dao.deleteById(id);
-		if (b) {
-			msgBean.setStatus(1);
-			msgBean.setMsg("删除成功");
-		} else {
-			msgBean.setStatus(0);
-			msgBean.setMsg("删除失败");
-		}
-		renderJson(msgBean);
-	}
+    @Before({BaseInterceptor.class})
+    public void info() {
+        String id = getPara("id");
+        int type = getPara("type") == null ? 0 : getParaToInt("type");
+        UserInfo userInfo = UserInfo.dao.findById(id);
+        User user = User.dao.findById(id);
+        user.setPassword("******");
+        setAttr("userInfo", userInfo);
+        setAttr("user", user);
+        if (type == 0) {
+            render("info.html");
+        } else {
+            render("add.html");
+        }
+    }
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Before({BaseInterceptor.class})
+    public void delete() {
+        MsgBean msgBean = new MsgBean();
+        String id = getPara("id");
+        boolean b = UserInfo.dao.deleteById(id);
+        if (b) {
+            msgBean.setStatus(1);
+            msgBean.setMsg("删除成功");
+        } else {
+            msgBean.setStatus(0);
+            msgBean.setMsg("删除失败");
+        }
+        renderJson(msgBean);
+    }
 
-	public void findByRoleId(){
-		String roleId = getPara("roleId");
-		List<UserInfo> userInfos = UserService.findByRoleId(roleId);
-		renderJson(userInfos);
-	}
+    @Override
+    public void update() {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void findByRoleId() {
+        String roleId = getPara("roleId");
+        List<UserInfo> userInfos = UserService.findByRoleId(roleId);
+        renderJson(userInfos);
+    }
 }

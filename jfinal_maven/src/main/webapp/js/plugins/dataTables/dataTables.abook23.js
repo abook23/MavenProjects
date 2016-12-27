@@ -1,3 +1,4 @@
+//@ sourceURL=dataTables.abook23.js
 /**
  * 
  * @param {String} dataTable	"#idName" or ".className"
@@ -13,14 +14,16 @@ function dataTable(dataTable, url, columns, dataSrc, rowCallback) {
 			url: url,
 			dataSrc: dataSrc
 		},
-        searchDelay: 800,
+		"autoWidth": false,
+		"scrollX": true,
+		searchDelay: 800,
 		columns: getDataTableColumns(columns),
 		"rowCallback": function(row, data, index) {
 			if(rowCallback != null)
 				rowCallback(row, data, index);
 		}
 	});
-    dataTableError(table);
+	dataTableError(table);
 	return table;
 }
 
@@ -36,7 +39,9 @@ function dataTableByServer(dataTable, url, columns, rowCallback) {
 		ordering: false, //排序
 		serverSide: true, //开启服务器模式
 		ajax: url,
-        searchDelay: 800,
+		"autoWidth": false,
+		"scrollX": true,
+		searchDelay: 800,
 		columns: getDataTableColumns(columns),
 		"rowCallback": function(row, data, index) {
 			if(rowCallback != null)
@@ -49,7 +54,7 @@ function dataTableByServer(dataTable, url, columns, rowCallback) {
 			//$('td:eq(0)', row).css('display', 'none');
 		}
 	});
-    dataTableError(table);
+	dataTableError(table);
 	return table;
 }
 
@@ -72,8 +77,8 @@ function getDataTableColumns(columns) {
 }
 
 function dataTableError(dataTable) {
-    $.fn.dataTable.ext.errMode = function(s,h,m){
-    	layer.msg("获取数据失败")
+	$.fn.dataTable.ext.errMode = function(s, h, m) {
+		layer.msg("获取数据失败")
 	}
 }
 
@@ -86,9 +91,6 @@ function dataTableError(dataTable) {
 //					var rowData = table.row(this).data();
 //					info(rowData.userId);
 //				});
-
-
-
 
 //
 //		<script>
