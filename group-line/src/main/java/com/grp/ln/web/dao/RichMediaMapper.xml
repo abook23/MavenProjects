@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grp.ln.web.dao.RichMediaMapper" >
+  <resultMap id="BaseResultMap" type="com.grp.ln.web.model.RichMedia" >
+    <id column="rmId" property="rmId" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="resIds" property="resIds" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="readNumber" property="readNumber" jdbcType="INTEGER" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rmId, userId, title, resIds, content, readNumber, datetime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grp.ln.web.model.RichMediaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rich_media
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rich_media
+    where rmId = #{rmId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from rich_media
+    where rmId = #{rmId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.grp.ln.web.model.RichMediaExample" >
+    delete from rich_media
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.grp.ln.web.model.RichMedia" >
+    insert into rich_media (rmId, userId, title, 
+      resIds, content, readNumber, 
+      datetime)
+    values (#{rmId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{resIds,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{readNumber,jdbcType=INTEGER}, 
+      #{datetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grp.ln.web.model.RichMedia" >
+    insert into rich_media
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rmId != null" >
+        rmId,
+      </if>
+      <if test="userId != null" >
+        userId,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="resIds != null" >
+        resIds,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="readNumber != null" >
+        readNumber,
+      </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rmId != null" >
+        #{rmId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="resIds != null" >
+        #{resIds,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="readNumber != null" >
+        #{readNumber,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.grp.ln.web.model.RichMediaExample" resultType="java.lang.Integer" >
+    select count(*) from rich_media
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rich_media
+    <set >
+      <if test="record.rmId != null" >
+        rmId = #{record.rmId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        userId = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resIds != null" >
+        resIds = #{record.resIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readNumber != null" >
+        readNumber = #{record.readNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.datetime != null" >
+        datetime = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rich_media
+    set rmId = #{record.rmId,jdbcType=VARCHAR},
+      userId = #{record.userId,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      resIds = #{record.resIds,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      readNumber = #{record.readNumber,jdbcType=INTEGER},
+      datetime = #{record.datetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grp.ln.web.model.RichMedia" >
+    update rich_media
+    <set >
+      <if test="userId != null" >
+        userId = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="resIds != null" >
+        resIds = #{resIds,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="readNumber != null" >
+        readNumber = #{readNumber,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where rmId = #{rmId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grp.ln.web.model.RichMedia" >
+    update rich_media
+    set userId = #{userId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      resIds = #{resIds,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      readNumber = #{readNumber,jdbcType=INTEGER},
+      datetime = #{datetime,jdbcType=TIMESTAMP}
+    where rmId = #{rmId,jdbcType=VARCHAR}
+  </update>
+</mapper>

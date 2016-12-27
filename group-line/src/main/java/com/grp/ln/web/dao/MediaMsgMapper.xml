@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grp.ln.web.dao.MediaMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.grp.ln.web.model.MediaMsg" >
+    <id column="mmsgId" property="mmsgId" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="res_ids" property="res_ids" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="readNumber" property="readNumber" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mmsgId, userId, title, res_ids, content, readNumber
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grp.ln.web.model.MediaMsgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from media_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from media_msg
+    where mmsgId = #{mmsgId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from media_msg
+    where mmsgId = #{mmsgId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.grp.ln.web.model.MediaMsgExample" >
+    delete from media_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.grp.ln.web.model.MediaMsg" >
+    insert into media_msg (mmsgId, userId, title, 
+      res_ids, content, readNumber
+      )
+    values (#{mmsgId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{res_ids,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{readNumber,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.grp.ln.web.model.MediaMsg" >
+    insert into media_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mmsgId != null" >
+        mmsgId,
+      </if>
+      <if test="userId != null" >
+        userId,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="res_ids != null" >
+        res_ids,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="readNumber != null" >
+        readNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mmsgId != null" >
+        #{mmsgId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="res_ids != null" >
+        #{res_ids,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="readNumber != null" >
+        #{readNumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.grp.ln.web.model.MediaMsgExample" resultType="java.lang.Integer" >
+    select count(*) from media_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update media_msg
+    <set >
+      <if test="record.mmsgId != null" >
+        mmsgId = #{record.mmsgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        userId = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.res_ids != null" >
+        res_ids = #{record.res_ids,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readNumber != null" >
+        readNumber = #{record.readNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update media_msg
+    set mmsgId = #{record.mmsgId,jdbcType=VARCHAR},
+      userId = #{record.userId,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      res_ids = #{record.res_ids,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      readNumber = #{record.readNumber,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grp.ln.web.model.MediaMsg" >
+    update media_msg
+    <set >
+      <if test="userId != null" >
+        userId = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="res_ids != null" >
+        res_ids = #{res_ids,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="readNumber != null" >
+        readNumber = #{readNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where mmsgId = #{mmsgId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grp.ln.web.model.MediaMsg" >
+    update media_msg
+    set userId = #{userId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      res_ids = #{res_ids,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      readNumber = #{readNumber,jdbcType=INTEGER}
+    where mmsgId = #{mmsgId,jdbcType=VARCHAR}
+  </update>
+</mapper>

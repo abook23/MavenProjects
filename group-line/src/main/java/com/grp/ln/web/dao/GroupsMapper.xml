@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grp.ln.web.dao.GroupsMapper">
+	<resultMap id="BaseResultMap" type="com.grp.ln.web.model.Groups">
+		<id column="grpId" property="grpId" jdbcType="VARCHAR" />
+		<result column="userId" property="userId" jdbcType="VARCHAR" />
+		<result column="parentId" property="parentId" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="dateTime" property="dateTime" jdbcType="TIMESTAMP" />
+		<result column="flag" property="flag" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		grpId, userId, parentId, name, dateTime, flag
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.grp.ln.web.model.GroupsExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from groups
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from groups
+		where grpId = #{grpId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from groups
+		where grpId = #{grpId,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.grp.ln.web.model.GroupsExample">
+		delete from groups
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.grp.ln.web.model.Groups">
+		insert into groups (grpId,
+		userId, parentId,
+		name, dateTime, flag
+		)
+		values
+		(#{grpId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+		#{parentId,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{dateTime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.grp.ln.web.model.Groups">
+		insert into groups
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="grpId != null">
+				grpId,
+			</if>
+			<if test="userId != null">
+				userId,
+			</if>
+			<if test="parentId != null">
+				parentId,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="dateTime != null">
+				dateTime,
+			</if>
+			<if test="flag != null">
+				flag,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="grpId != null">
+				#{grpId,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="dateTime != null">
+				#{dateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="flag != null">
+				#{flag,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.grp.ln.web.model.GroupsExample"
+		resultType="java.lang.Integer">
+		select count(*) from groups
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update groups
+		<set>
+			<if test="record.grpId != null">
+				grpId = #{record.grpId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userId != null">
+				userId = #{record.userId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.parentId != null">
+				parentId = #{record.parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.dateTime != null">
+				dateTime = #{record.dateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.flag != null">
+				flag = #{record.flag,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update groups
+		set grpId = #{record.grpId,jdbcType=VARCHAR},
+		userId =
+		#{record.userId,jdbcType=VARCHAR},
+		parentId =
+		#{record.parentId,jdbcType=VARCHAR},
+		name =
+		#{record.name,jdbcType=VARCHAR},
+		dateTime =
+		#{record.dateTime,jdbcType=TIMESTAMP},
+		flag =
+		#{record.flag,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.grp.ln.web.model.Groups">
+		update groups
+		<set>
+			<if test="userId != null">
+				userId = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				parentId = #{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="dateTime != null">
+				dateTime = #{dateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="flag != null">
+				flag = #{flag,jdbcType=INTEGER},
+			</if>
+		</set>
+		where grpId = #{grpId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.grp.ln.web.model.Groups">
+		update groups
+		set
+		userId = #{userId,jdbcType=VARCHAR},
+		parentId =
+		#{parentId,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		dateTime
+		= #{dateTime,jdbcType=TIMESTAMP},
+		flag = #{flag,jdbcType=INTEGER}
+		where
+		grpId = #{grpId,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectGroupUsers" parameterType="String"
+		resultMap="com.grp.ln.web.dao.UserInfoMapper.BaseResultMap">
+		SELECT
+		ui.*
+		FROM
+		user_info ui,
+		user_group ug
+		WHERE
+		ui.userId =
+		ug.userId
+		AND ug.grpId = #{grpId,jdbcType=VARCHAR}
+	</select>
+</mapper>

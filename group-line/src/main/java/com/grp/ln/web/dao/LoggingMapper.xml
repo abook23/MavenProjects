@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grp.ln.web.dao.LoggingMapper" >
+  <resultMap id="BaseResultMap" type="com.grp.ln.web.model.Logging" >
+    <id column="logId" property="logId" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="dateTime" property="dateTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    logId, userId, dateTime, type, ip, addr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grp.ln.web.model.LoggingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from logging
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from logging
+    where logId = #{logId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from logging
+    where logId = #{logId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.grp.ln.web.model.LoggingExample" >
+    delete from logging
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.grp.ln.web.model.Logging" >
+    insert into logging (logId, userId, dateTime, 
+      type, ip, addr)
+    values (#{logId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{dateTime,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grp.ln.web.model.Logging" >
+    insert into logging
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        logId,
+      </if>
+      <if test="userId != null" >
+        userId,
+      </if>
+      <if test="dateTime != null" >
+        dateTime,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.grp.ln.web.model.LoggingExample" resultType="java.lang.Integer" >
+    select count(*) from logging
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update logging
+    <set >
+      <if test="record.logId != null" >
+        logId = #{record.logId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        userId = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateTime != null" >
+        dateTime = #{record.dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null" >
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update logging
+    set logId = #{record.logId,jdbcType=VARCHAR},
+      userId = #{record.userId,jdbcType=VARCHAR},
+      dateTime = #{record.dateTime,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grp.ln.web.model.Logging" >
+    update logging
+    <set >
+      <if test="userId != null" >
+        userId = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        dateTime = #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logId = #{logId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grp.ln.web.model.Logging" >
+    update logging
+    set userId = #{userId,jdbcType=VARCHAR},
+      dateTime = #{dateTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR}
+    where logId = #{logId,jdbcType=VARCHAR}
+  </update>
+</mapper>

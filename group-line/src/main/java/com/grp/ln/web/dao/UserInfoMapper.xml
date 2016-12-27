@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grp.ln.web.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.grp.ln.web.model.UserInfo" >
+    <id column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="CHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="headId" property="headId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="dateTime" property="dateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    userId, gender, age, phone, email, qq, headId, name, dateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grp.ln.web.model.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where userId = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_info
+    where userId = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.grp.ln.web.model.UserInfoExample" >
+    delete from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.grp.ln.web.model.UserInfo" >
+    insert into user_info (userId, gender, age, 
+      phone, email, qq, headId, 
+      name, dateTime)
+    values (#{userId,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, #{age,jdbcType=INTEGER}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{headId,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{dateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grp.ln.web.model.UserInfo" >
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        userId,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="headId != null" >
+        headId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="dateTime != null" >
+        dateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="headId != null" >
+        #{headId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.grp.ln.web.model.UserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_info
+    <set >
+      <if test="record.userId != null" >
+        userId = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null" >
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headId != null" >
+        headId = #{record.headId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateTime != null" >
+        dateTime = #{record.dateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_info
+    set userId = #{record.userId,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=CHAR},
+      age = #{record.age,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      headId = #{record.headId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      dateTime = #{record.dateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grp.ln.web.model.UserInfo" >
+    update user_info
+    <set >
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="headId != null" >
+        headId = #{headId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        dateTime = #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where userId = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grp.ln.web.model.UserInfo" >
+    update user_info
+    set gender = #{gender,jdbcType=CHAR},
+      age = #{age,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      headId = #{headId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      dateTime = #{dateTime,jdbcType=TIMESTAMP}
+    where userId = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

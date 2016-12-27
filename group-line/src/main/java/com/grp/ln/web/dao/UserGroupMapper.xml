@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grp.ln.web.dao.UserGroupMapper">
+	<resultMap id="BaseResultMap" type="com.grp.ln.web.model.UserGroup">
+		<result column="userId" property="userId" jdbcType="VARCHAR" />
+		<result column="grpId" property="grpId" jdbcType="VARCHAR" />
+		<result column="aliasName" property="aliasName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		userId, grpId, aliasName
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.grp.ln.web.model.UserGroupExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from user_group
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<delete id="deleteByExample" parameterType="com.grp.ln.web.model.UserGroupExample">
+		delete from user_group
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.grp.ln.web.model.UserGroup">
+		insert into user_group
+		(userId, grpId, aliasName
+		)
+		values (#{userId,jdbcType=VARCHAR},
+		#{grpId,jdbcType=VARCHAR},
+		#{aliasName,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.grp.ln.web.model.UserGroup">
+		insert into user_group
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				userId,
+			</if>
+			<if test="grpId != null">
+				grpId,
+			</if>
+			<if test="aliasName != null">
+				aliasName,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="grpId != null">
+				#{grpId,jdbcType=VARCHAR},
+			</if>
+			<if test="aliasName != null">
+				#{aliasName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.grp.ln.web.model.UserGroupExample"
+		resultType="java.lang.Integer">
+		select count(*) from user_group
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update user_group
+		<set>
+			<if test="record.userId != null">
+				userId = #{record.userId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.grpId != null">
+				grpId = #{record.grpId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.aliasName != null">
+				aliasName = #{record.aliasName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update user_group
+		set userId = #{record.userId,jdbcType=VARCHAR},
+		grpId
+		= #{record.grpId,jdbcType=VARCHAR},
+		aliasName =
+		#{record.aliasName,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<resultMap id="BaseResultMap_User" type="com.grp.ln.web.model.UserGroup">
+		<result column="userId" property="userId" jdbcType="VARCHAR" />
+		<result column="grpId" property="grpId" jdbcType="VARCHAR" />
+		<result column="aliasName" property="aliasName" jdbcType="VARCHAR" />
+		<collection property="userInfos"
+			resultMap="com.grp.ln.web.dao.UserInfoMapper.BaseResultMap"></collection>
+	</resultMap>
+
+	<select id="selectUserGroup" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM
+		user_group ug,
+		groups g
+		WHERE
+		g.grpId = ug.grpId
+		AND g.flag = 1
+		AND ug.userId = #{userId,jdbcType=VARCHAR}
+	</select>
+</mapper>
