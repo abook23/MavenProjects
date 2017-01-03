@@ -4,7 +4,7 @@
 		<div class="ibox-title">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-10">
-					<h5>系统管理/用户管理</h5>
+					<h5>系统管理/角色管理</h5>
 				</div>
 				<div class="col-xs-6 col-md-2">
 					<button id="add" type="button" class="btn btn-primary btn-sm" onclick="addPage()">添加</button>
@@ -39,13 +39,13 @@
 <!-- Data Tables -->
 <script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-<script src="../../js/plugins/dataTables/dataTables.abook23.js"></script>
+<script src="/js/plugins/dataTables/dataTables.abook23.js"></script>
 <!-- Page-Level Scripts -->
-<script src="/page/role/role.js" />
+<script src="/page/menu/menu.js" />
 
 <script>
 	$(document).ready(function() {
-		var table = dataTableByServer(".dataTables-example", "/role/list", "name,_describe,status");
+		var table = dataTableByServer(".dataTables-example", "/menu/listAll", "name,url,status");
 		$('.dataTables-example').on("dblclick", 'tr', function() {
 			var rowData = table.row(this).data();
 			itemPage(rowData.roleId);
