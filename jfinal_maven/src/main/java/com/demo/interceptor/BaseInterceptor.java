@@ -16,7 +16,7 @@ public class BaseInterceptor implements Interceptor {
 		if (user != null){
 		    inv.invoke();
 		}else {
-			controller.redirect("/login.html");
+			controller.redirect("/tologin.html");
 		}
 	}
 

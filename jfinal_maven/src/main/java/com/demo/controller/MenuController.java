@@ -17,7 +17,7 @@ import com.jfinal.plugin.activerecord.Page;
 public class MenuController extends BaseController {
 
 
-	public void mainPage(){
+	public void main(){
 		render("main.html");
 	}
 

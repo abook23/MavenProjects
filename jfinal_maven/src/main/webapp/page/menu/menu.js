@@ -6,20 +6,20 @@ function addPage() {
 	layerOpen("/page/menu/add.html");
 }
 
-function add(){
+function add() {
 	$.ajax({
-		type:"post",
-		url:"/menu/add",
-		data:$('#addForm').serialize(),
-		async:true,
-		success:function(data){
-			
+		type: "post",
+		url: "/menu/add",
+		data: $('#addForm').serialize(),
+		async: true,
+		success: function(data) {
+
 		}
-		
+
 	});
 }
 
-function itemPage(id){
+function itemPage(id) {
 	layerOpen("/page/menu/edit.html");
 }
 
@@ -31,7 +31,7 @@ function selectOption(select, url) {
 		success: function(data) {
 			var html = '<option value="0">一级菜单</option>';
 			$.each(data, function(i, item) {
-				html += '<option value="'+item.menuId+'">' + item.name + '</option>';
+				html += '<option value="' + item.menuId + '">' + item.name + '</option>';
 			});
 			$(select).html(html);
 		}
@@ -57,4 +57,35 @@ function layerOpen(url, cancel) {
 			}
 		}
 	});
+}
+
+function findMenu() {
+	var tree = new Array();
+	jQuery.ajax({
+		type: "get",
+		url: "/menu/list",
+		async: false,
+		dataType: 'json',
+		success: function(data) {
+			if(data) {
+				$.each(data, function(i, item) {
+					if(item.pId == 0) {
+						var nodes = new Array();
+						$.each(data, function(j, sub) {
+							var parent = {
+								text: sub.name
+							}
+							nodes[j] = parent;
+						});
+						var parent = {
+							text: item.name,
+							nodes:nodes
+						}
+						tree[i] = parent;
+					}
+				});
+			}
+		},
+	});
+	return tree;
 }

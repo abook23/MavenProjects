@@ -30,6 +30,8 @@ public class DemoConfig extends JFinalConfig {
 		// 加载少量必要配置，随后可用PropKit.get(...)获取值
 		PropKit.use("config.properties");
 		me.setDevMode(PropKit.getBoolean("devMode", false));
+		me.setBaseUploadPath("E:/uploadFiles");
+		me.setBaseDownloadPath("E:/uploadFiles");
 	}
 	
 	/**
@@ -82,6 +84,6 @@ public class DemoConfig extends JFinalConfig {
 	 * 运行此 main 方法可以启动项目，此main方法可以放置在任意的Class类定义中，不一定要放于此
 	 */
 	public static void main(String[] args) {
-		JFinal.start("src/main/webapp", 8080, "/", 3);
+		JFinal.start("src/main/webapp", 80, "/", 3);
 	}
 }
