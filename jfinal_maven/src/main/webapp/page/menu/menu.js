@@ -58,34 +58,3 @@ function layerOpen(url, cancel) {
 		}
 	});
 }
-
-function findMenu() {
-	var tree = new Array();
-	jQuery.ajax({
-		type: "get",
-		url: "/menu/list",
-		async: false,
-		dataType: 'json',
-		success: function(data) {
-			if(data) {
-				$.each(data, function(i, item) {
-					if(item.pId == 0) {
-						var nodes = new Array();
-						$.each(data, function(j, sub) {
-							var parent = {
-								text: sub.name
-							}
-							nodes[j] = parent;
-						});
-						var parent = {
-							text: item.name,
-							nodes:nodes
-						}
-						tree[i] = parent;
-					}
-				});
-			}
-		},
-	});
-	return tree;
-}

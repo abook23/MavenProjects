@@ -30,4 +30,14 @@ public class UserService {
         return UserInfo.dao.find("select u.* from user_info u,user_role ur where ur.roleId = ? and u.userId = ur.userId", roleId);
     }
 
+    public static Page<UserInfo> findByMenuId(String menuId, int pageNumber, int pageSize, String selectValue) {
+        String sqlEx = "from user_info u,user_menu um where um.menuId = ? and u.userId = um.userId";
+        if (selectValue != null && selectValue.length() > 0) {
+            sqlEx += " and concat(name,',',phone,',',email) like '%" + selectValue + "%'";
+        }
+        sqlEx += " order by createTime asc";
+        return UserInfo.dao.paginate(pageNumber, pageSize, "select * ", sqlEx, menuId);
+    }
+
+
 }

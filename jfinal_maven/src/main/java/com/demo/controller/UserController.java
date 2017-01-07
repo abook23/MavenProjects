@@ -176,4 +176,12 @@ public class UserController extends BaseController {
         List<UserInfo> userInfos = UserService.findByRoleId(roleId);
         renderJson(userInfos);
     }
+
+    public void findByMenuId(){
+        String menuId = getPara("menuId");
+        DataTable d= getDataTable();
+        Page<UserInfo> userInfos = UserService.findByMenuId(menuId,d.getPageNumber(),d.getPageSize(),d.getSearchValue());
+        d.setData(userInfos);
+        renderJson(d.getResponseData());
+    }
 }
