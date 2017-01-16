@@ -10,7 +10,9 @@ import com.demo.service.UserService;
 import com.demo.util.IdUtils;
 import com.jfinal.plugin.activerecord.Page;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RoleController extends BaseController {
 
@@ -20,6 +22,9 @@ public class RoleController extends BaseController {
 
     public void addPage() {
         render("add.html");
+    }
+    public void editPage() {
+        render("edit.html");
     }
 
     @Override
@@ -54,15 +59,25 @@ public class RoleController extends BaseController {
         renderJson(page.getList());
     }
 
+    public void listByMenuId() {
+        String menuId = getPara("menuId");
+        List<Role> roles = RoleService.list(0, -1).getList();
+        List<Role> roles_menu = RoleService.findByMenuId(menuId);
+        Map<String,Object> data = new HashMap<>();
+        data.put("roles",roles);
+        data.put("roles_menu",roles_menu);
+        renderJson(data);
+    }
+
     public void info(){
-        String roleId = getPara("roleId");
-        Role role = Role.dao.findById(roleId);
-        List<Role> roles = RoleService.findByPId(role.getRoleId());
-        List<UserInfo> userInfos = UserService.findByRoleId(roleId);
-        setAttr("role",role);
-        setAttr("roles",roles);
-        setAttr("userInfos",userInfos);
-        render("info.jsp");
+//        String roleId = getPara("roleId");
+//        Role role = Role.dao.findById(roleId);
+//        List<Role> roles = RoleService.findByPId(role.getRoleId());
+//        List<UserInfo> userInfos = UserService.findByRoleId(roleId);
+//        setAttr("role",role);
+//        setAttr("roles",roles);
+//        setAttr("userInfos",userInfos);
+        render("info.html");
     }
 
     public void findRoleByPid(){

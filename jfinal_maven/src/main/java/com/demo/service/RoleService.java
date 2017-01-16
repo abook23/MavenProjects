@@ -17,7 +17,11 @@ public class RoleService {
         }
     }
 
-    public static List<Role> findByPId(String pId){
-        return Role.dao.find("select * from role where pId = ?",pId);
+    public static List<Role> findByPId(String pId) {
+        return Role.dao.find("select * from role where pId = ?", pId);
+    }
+
+    public static List<Role> findByMenuId(String menuId) {
+        return Role.dao.find("select r.* from role r,role_menu rm where rm.menuId = ? and r.roleId = rm.roleId", menuId);
     }
 }

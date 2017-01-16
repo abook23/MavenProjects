@@ -4,6 +4,7 @@ import com.demo.Key;
 import com.demo.common.model.MsgBean;
 import com.demo.common.model.User;
 import com.demo.common.model.UserInfo;
+import com.demo.common.model.UserRole;
 import com.demo.controller.base.BaseController;
 import com.demo.controller.model.DataTable;
 import com.demo.interceptor.BaseInterceptor;
@@ -11,6 +12,7 @@ import com.demo.service.UserService;
 import com.demo.util.IdUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 
 import java.util.List;
 
@@ -171,16 +173,51 @@ public class UserController extends BaseController {
 
     }
 
+    public void userRoleAdd() {
+        String roleId = getPara("roleId");
+        String userId = getPara("userId");
+        UserRole userRole = new UserRole();
+        userRole.setId(IdUtils.getId());
+        userRole.setRoleId(roleId);
+        userRole.setUserId(userId);
+        userRole.save();
+        renderJson(1);
+    }
+
+    public void userRoleDel() {
+        String roleId = getPara("roleId");
+        String userId = getPara("userId");
+        UserRole userRole = UserRole.dao.findFirst("select id from user_role where userId=? and roleId=?", userId, roleId);
+        userRole.delete();
+        renderJson(1);
+    }
+
     public void findByRoleId() {
         String roleId = getPara("roleId");
         List<UserInfo> userInfos = UserService.findByRoleId(roleId);
         renderJson(userInfos);
     }
 
-    public void findByMenuId(){
+    public void findByRoleIdPage() {
+        String roleId = getPara("roleId");
+        DataTable dt = getDataTable();
+        Page<UserInfo> userInfos = UserService.findByRoleId(roleId, dt.getPageNumber(), dt.getPageSize(), dt.getSearchValue());
+        dt.setData(userInfos);
+        renderJson(dt.getResponseData());
+    }
+
+    public void findByRoleIdPage2() {
+        String roleId = getPara("roleId");
+        DataTable dt = getDataTable();
+        Page<Record> userInfos = UserService.findByRoleId2(roleId,dt.getStart(), dt.getPageNumber(), dt.getPageSize(), dt.getSearchValue());
+        dt.setData(userInfos);
+        renderJson(dt.getResponseData());
+    }
+
+    public void findByMenuId() {
         String menuId = getPara("menuId");
-        DataTable d= getDataTable();
-        Page<UserInfo> userInfos = UserService.findByMenuId(menuId,d.getPageNumber(),d.getPageSize(),d.getSearchValue());
+        DataTable d = getDataTable();
+        Page<UserInfo> userInfos = UserService.findByMenuId(menuId, d.getPageNumber(), d.getPageSize(), d.getSearchValue());
         d.setData(userInfos);
         renderJson(d.getResponseData());
     }

@@ -18,10 +18,15 @@ function add(id) {
 		async: false,
 		data: $("#InfoFrom").serialize(),
 		success: function(data) {
-			layerMsg(obj.msg, 500, function() {
-				parent.layer.closeAll();
-				common_ajax.ajaxFormMainPanel('/role/main');
-			})
+			if(data.status == 1) {
+				layerMsg(data.msg, 500, function() {
+					parent.layer.closeAll();
+					common_ajax.ajaxFormMainPanel('/role/main');
+				});
+			} else {
+				layerOpenMsg(data.msg);
+			}
+
 		}
 	});
 }
@@ -115,7 +120,7 @@ function selectOption(select, url) {
 		success: function(data) {
 			var html = '';
 			$.each(data, function(i, item) {
-				html += '<option value="'+item.roleId+'">' + item.name + '</option>';
+				html += '<option value="' + item.roleId + '">' + item.name + '</option>';
 			});
 			$(select).html(html);
 		}

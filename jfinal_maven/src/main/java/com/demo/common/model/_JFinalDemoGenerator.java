@@ -25,7 +25,7 @@ public class _JFinalDemoGenerator {
 	public static void main(String[] args) {
 
 		// base model 文件保存路径
-		String baseModelOutputDir = PathKit.getWebRootPath() + "/src/main/java/com/demo/common/model/base";
+		String baseModelOutputDir = PathKit.getWebRootPath() + "/../java/com/demo/common/model/base";
 		// base model 所使用的包名
 		String baseModelPackageName = "com.demo.common.model.base";
 		// model 所使用的包名 (MappingKit 默认使用的包名)

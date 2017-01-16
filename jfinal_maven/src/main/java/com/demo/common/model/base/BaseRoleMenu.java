@@ -9,20 +9,20 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseRoleMenu<M extends BaseRoleMenu<M>> extends Model<M> implements IBean {
 
-	public void setId(java.lang.Integer id) {
+	public void setId(java.lang.String id) {
 		set("id", id);
 	}
 
-	public java.lang.Integer getId() {
+	public java.lang.String getId() {
 		return get("id");
 	}
 
-	public void setMuenId(java.lang.String muenId) {
-		set("muenId", muenId);
+	public void setMenuId(java.lang.String menuId) {
+		set("menuId", menuId);
 	}
 
-	public java.lang.String getMuenId() {
-		return get("muenId");
+	public java.lang.String getMenuId() {
+		return get("menuId");
 	}
 
 	public void setRoleId(java.lang.String roleId) {

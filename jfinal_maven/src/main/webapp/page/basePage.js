@@ -7,10 +7,29 @@ function layerOpen(url, cancel) {
 	var html = common_ajax.ajaxFunc(url);
 	layer.open({
 		type: 1,
-		shade: false,
+		shade: 0.1,//false
 		title: false, //不显示标题
 		content: html, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
 		area: ['75%', '90%'], //宽高
+		cancel: function() {
+			if(cancel != null) {
+				cancel();
+			}
+		}
+	});
+}
+/**
+ *
+ * @param {String} msg
+ * @param {Function} cancel
+ */
+function layerOpenMsg(msg, cancel) {
+	var html = common_ajax.ajaxFunc(url);
+	layer.open({
+		type: 1,
+		shade: false,
+		title: false, //不显示标题
+		content: html, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
 		cancel: function() {
 			if(cancel != null) {
 				cancel();
@@ -26,7 +45,7 @@ function layerOpen(url, cancel) {
  * @param {Function} closeCallBack
  */
 function layerMsg(msg, time, closeCallBack) {
-	ayer.msg(msg, {
+	layer.msg(msg, {
 		time: time //20s后自动关闭
 	}, function() {
 		//		parent.layer.closeAll();
