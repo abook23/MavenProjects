@@ -20,9 +20,9 @@ public class SystemController extends Controller {
 			
 			String pId = IdUtils.getId();
 			addMenu("0", pId, "系统管理",null);
-			addMenu(pId, IdUtils.getId(), "菜单管理","/menu/list");
-			addMenu(pId, IdUtils.getId(), "角色管理","/rolo/list");
-			addMenu(pId, IdUtils.getId(), "用户管理","/user/list");
+			addMenu(pId, IdUtils.getId(), "菜单管理","/menu/main");
+			addMenu(pId, IdUtils.getId(), "角色管理","/role/main");
+			addMenu(pId, IdUtils.getId(), "用户管理","/user/main");
 			
 			UserMenu userMenu = new UserMenu();
 			userMenu.setMenuId(pId);
@@ -42,7 +42,6 @@ public class SystemController extends Controller {
 		menu.setUrl(url);
 		menu.save();
 		addUserMenu(userId, id);
-		
 	}
 	
 	private User addSystemUser(){
@@ -58,6 +57,7 @@ public class SystemController extends Controller {
 		userInfo.setName(user.getUserName());
 		userInfo.setPhone("888888");
 		userInfo.setEmail("888888@qq.com");
+		userInfo.setQq("888888");
 		userInfo.save();
 		
 		return user;

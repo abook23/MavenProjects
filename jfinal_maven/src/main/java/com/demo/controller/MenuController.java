@@ -24,8 +24,13 @@ public class MenuController extends BaseController {
 
     public void list() {
         User user = getSessionUer();
-        List<Menu> menus = MenuService.list(user.getUserId());
-        renderJson(menus);
+        if ("system".equals(user.getUserName())) {
+            List<Menu> menus = MenuService.list(null);
+            renderJson(menus);
+        }else {
+            List<Menu> menus = MenuService.list(user.getUserId());
+            renderJson(menus);
+        }
     }
 
     public void list_all() {
@@ -44,7 +49,8 @@ public class MenuController extends BaseController {
     public void add() {
         Menu menu = getModel(Menu.class);
         menu.setMenuId(IdUtils.getId());
-        menu.save();
+        boolean b = menu.save();
+        renderJson(b);
     }
 
     public void setUserMenu() {
@@ -69,13 +75,17 @@ public class MenuController extends BaseController {
     @Override
     public void update() {
         // TODO Auto-generated method stub
-
+        Menu menu = getModel(Menu.class,"");
+        boolean b = menu.update();
+        renderJson(b);
     }
 
     @Override
     public void delete() {
         // TODO Auto-generated method stub
-
+        Menu menu = getModel(Menu.class,"");
+        boolean b = menu.delete();
+        renderJson(b);
     }
 
 }

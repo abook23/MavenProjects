@@ -126,3 +126,18 @@ function selectOption(select, url) {
 		}
 	});
 }
+
+function role_update(roleId, status) {
+	if(status == 1) {
+		status = 0;
+	} else if(status == 0) {
+		status = 1;
+	}
+	$.post("/role/update", {
+		roleId: roleId,
+		status: status
+	}, function(obj) {
+		debugger;
+		table.ajax.reload();//table 在main.html 里
+	});
+}

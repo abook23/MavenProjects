@@ -4,10 +4,11 @@
 		<div class="ibox-title">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-10">
-					<h5>系统管理/角色管理</h5>
+					<h5>系统管理/菜单管理</h5>
 				</div>
 				<div class="col-xs-6 col-md-2">
 					<button id="add" type="button" class="btn btn-primary btn-sm" onclick="addPage()">添加</button>
+					<button id="add" type="button" class="btn btn-primary btn-sm" onclick="itemPage();">菜单分配</button>
 				</div>
 			</div>
 		</div>
@@ -22,8 +23,9 @@
 							<thead>
 								<tr>
 									<th>用户名</th>
-									<th>描述</th>
+									<th>URL</th>
 									<th>状态</th>
+									<th width="10%">操作</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -44,11 +46,56 @@
 <script src="/page/menu/menu.js" />
 
 <script>
+	var table;
 	$(document).ready(function() {
-		var table = dataTableByServer(".dataTables-example", "/menu/listAll", "name,url,status");
-		$('.dataTables-example').on("dblclick", 'tr', function() {
-			var rowData = table.row(this).data();
-			itemPage(rowData.roleId);
+		//var table = dataTableByServer(".dataTables-example", "/menu/listAll", "name,url,status");
+		table = $('.dataTables-example').DataTable({
+			ordering: false, //排序
+			//开启服务器模式
+			serverSide: true,
+			ajax: '/menu/listAll',
+			columns: [{
+				data: 'name'
+			}, {
+				data: 'url'
+			}, {
+				data: 'status',
+				render: function(data, type, row, meta) {
+					if(data == 0) {
+						return '<font color="#d9534f">禁用</font>';
+					} else {
+						return '<font color="#5cb85c">启用</font>';
+					}
+				}
+			}, {
+				render: function(data, type, row, meta) {
+					var status = row.status;
+					if(status == 1) {
+						return '<button type="button" class="btn btn-danger btn-sm">禁用</button>';
+					} else {
+						var html = '<button type="button" class="btn btn-primary btn-sm">启用</button> ' +
+							'<button type="button" id="del" class="btn btn-warning btn-sm">删除</button>';
+						return html;
+					}
+				}
+			}],
+		});
+		//		$('.dataTables-example').on("dblclick", 'tr', function() {
+		//			var rowData = table.row(this).data();
+		//			itemPage(rowData.roleId);
+		//		});
+		$('.dataTables-example').on("click", 'tr button', function() {
+			debugger;
+			var id = $(this).attr("id");
+			var p = $(this).parent();
+			var rowData = table.row(p).data();
+			
+			if(id == 'del') {
+				menu_del(rowData.menuId);
+			} else {
+				//alert("menuId:"+rowData.menuId+" status:"+rowData.status);
+				menu_update(rowData.menuId, rowData.status);
+			}
 		});
 	});
 </script>

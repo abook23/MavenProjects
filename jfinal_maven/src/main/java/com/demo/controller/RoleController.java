@@ -89,7 +89,9 @@ public class RoleController extends BaseController {
     @Override
     public void update() {
         // TODO Auto-generated method stub
-
+        Role role = getModel(Role.class,"");
+        boolean b = role.update();
+        renderJson(b);
     }
 
     @Override

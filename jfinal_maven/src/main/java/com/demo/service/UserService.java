@@ -16,15 +16,24 @@ public class UserService {
         return User.dao.findFirst(sql);
     }
 
-    public static Page<UserInfo> list(int pageNumber, int pageSize) {
-        return UserInfo.dao.paginate(pageNumber, pageSize, "select * ",
-                "from user_info order by createTime asc");
+    public static User qrcode(String code){
+        String sql = "select * from user where qrcode = ?";
+        return User.dao.findFirst(sql,code);
     }
 
-    public static Page<UserInfo> listLike(int pageNumber, int pageSize,
-                                          String value) {
-        return UserInfo.dao.paginate(pageNumber, pageSize, "select * ",
-                "FROM user_info WHERE concat(name,',',phone,',',email,',',qq) LIKE '%"
+    public static boolean checkUserName(String userName) {
+        Record record = Db.findFirst("select count(1) from user where userName= ?", userName);
+        return record != null;
+    }
+
+    public static Page<Record> list(int pageNumber, int pageSize) {
+        return Db.paginate(pageNumber, pageSize, "select ui.*,u.status ",
+                "from user_info ui,user u where ui.userId = u.userId");
+    }
+
+    public static Page<Record> listLike(int pageNumber, int pageSize, String value) {
+        return Db.paginate(pageNumber, pageSize, "select ui.*,u.status ",
+                "from user_info ui,user u where ui.userId = u.userId and concat(name,',',phone,',',email,',',qq) like '%"
                         + value + "%' order by createTime asc");
     }
 

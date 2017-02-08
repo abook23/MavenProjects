@@ -41,4 +41,20 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 		return get("status");
 	}
 
+	public void setQrcode(java.lang.String qrcode) {
+		set("qrcode", qrcode);
+	}
+
+	public java.lang.String getQrcode() {
+		return get("qrcode");
+	}
+
+	public void setQrcodeType(java.lang.Integer qrcodeType) {
+		set("qrcodeType", qrcodeType);
+	}
+
+	public java.lang.Integer getQrcodeType() {
+		return get("qrcodeType");
+	}
+
 }

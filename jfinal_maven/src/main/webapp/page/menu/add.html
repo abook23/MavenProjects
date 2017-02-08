@@ -41,7 +41,7 @@
                         <label  class="col-sm-3 control-label">名称</label>
                         <div class="col-sm-9">
                             <input name="menu.name" class="form-control" type="text"
-                                   placeholder="角色名称" required="" aria-required="true">
+                                   placeholder="菜单名称" required="" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -90,10 +90,9 @@
     });
     //以下为官方示例
     $().ready(function () {
-    	selectOption("#select","/menu/list");
+    	selectOption("#select","/menu/list_all");
         $("#addForm").validate({
             submitHandler: function () {
-            	alert(2312);
                 add();
             }
         });

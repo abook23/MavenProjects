@@ -6,6 +6,7 @@
 		<title>后台登录</title>
 		<meta name="author" content="DeathGhost" />
 		<link rel="stylesheet" type="text/css" href="css/style1.css" tppabs="css/style1.css" />
+
 		<style>
 			body {
 				height: 100%;
@@ -18,10 +19,47 @@
 				position: absolute;
 			}
 		</style>
+	</head>
+
+	<body>
+		<form id="loginForm" action='/user/login'>
+			<dl class="admin_login">
+				<dt>
+				  <strong>站点后台管理系统</strong>
+				  <em>Management System</em>
+				</dt>
+				<div style="width: 300px; margin-right: 10px; float: left;">
+					<dd class="user_icon">
+						<input type="text" name="userName" value="system" placeholder="账号" class="login_txtbx" />
+					</dd>
+					<dd class="pwd_icon">
+						<input type="password" name="password" value="system" placeholder="密码" class="login_txtbx" />
+					</dd>
+					<dd class="val_icon">
+						<div class="checkcode">
+							<input type="text" id="J_codetext" placeholder="验证码" maxlength="4" class="login_txtbx">
+							<canvas class="J_codeimg" id="myCanvas" onclick="createCode()">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
+						</div>
+						<input type="button" value="验证码核验" class="ver_btn" onClick="validate();">
+					</dd>
+					<dd>
+						<input type="button" value="立即登陆" class="submit_btn" />
+					</dd>
+				</div>
+				<div style="width: 210px; height: 210px;">
+					<div id="code"></div>
+				</div>
+				<dd>
+					<p>© 2015-2016 dtt 版权所有</p>
+					<p>B2-8998988-1</p>
+				</dd>
+			</dl>
+		</form>
 		<script src="js/jquery-2.1.1.min.js"></script>
 		<script src="js/verificationNumbers.js" tppabs="js/verificationNumbers.js"></script>
 		<script src="js/Particleground.js" tppabs="js/Particleground.js"></script>
 		<script src="layer/layer.js"></script>
+		<script src="js/jquery.qrcode.min.js"></script>
 		<script>
 			$(document).ready(function() {
 				//粒子背景特效
@@ -53,39 +91,43 @@
 							break;
 					}
 				});
-			});
-		</script>
-	</head>
 
-	<body>
-		<form id="loginForm" action='/user/login'>
-			<dl class="admin_login">
-				<dt>
-		  <strong>站点后台管理系统</strong>
-		  <em>Management System</em>
-		 </dt>
-				<dd class="user_icon">
-					<input type="text" name="userName" value="system" placeholder="账号" class="login_txtbx" />
-				</dd>
-				<dd class="pwd_icon">
-					<input type="password" name="password" value="system" placeholder="密码" class="login_txtbx" />
-				</dd>
-				<dd class="val_icon">
-					<div class="checkcode">
-						<input type="text" id="J_codetext" placeholder="验证码" maxlength="4" class="login_txtbx">
-						<canvas class="J_codeimg" id="myCanvas" onclick="createCode()">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
-					</div>
-					<input type="button" value="验证码核验" class="ver_btn" onClick="validate();">
-				</dd>
-				<dd>
-					<input type="button" value="立即登陆" class="submit_btn" />
-				</dd>
-				<dd>
-					<p>© 2015-2016 dtt 版权所有</p>
-					<p>B2-8998988-1</p>
-				</dd>
-			</dl>
-		</form>
+				//$('#code').qrcode("http://www.helloweba.com"); //任意字符串
+				longPolling();
+			});
+
+			function longPolling() {
+				$.get("/user/getQrcode", function(obj) {
+					//var code = "http://www.wandoujia.com/apps/com.dtt.cd.driver?uuid=" + obj.code + "&time=" + obj.time;
+					var urlStr = obj.url+"?uuid=" + obj.code + "&time=" + obj.time;
+
+					$("#code").empty();
+					$("#code").qrcode({
+						render: "canvas", //设置渲染方式  
+						width: 200, //设置宽度  
+						height: 200, //设置高度
+						typeNumber: -1, //计算模式
+						correctLevel: 1, //二维码纠错级别
+						text: urlStr //任意内容 
+					});
+					$.ajax({
+						url: "/user/qrcodeLoading",
+						data: {
+							"timed": new Date().getTime(),
+							"code": obj.code
+						},
+						dataType: "text",
+						timeout: 60000,
+						error: function(data) {
+							//longPolling();
+						},
+						success: function(data) {
+							location.href = "../main";
+						}
+					});
+				});
+			}
+		</script>
 	</body>
 
 </html>

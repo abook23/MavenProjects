@@ -13,7 +13,8 @@ function add() {
 		data: $('#addForm').serialize(),
 		async: true,
 		success: function(data) {
-
+			parent.layer.closeAll();
+			common_ajax.ajaxFormMainPanel('/menu/main');
 		}
 
 	});
@@ -38,23 +39,29 @@ function selectOption(select, url) {
 	});
 }
 
-/**
- *
- * @param {String} url
- * @param {Function} cancel
- */
-function layerOpen(url, cancel) {
-	var html = common_ajax.ajaxFunc(url);
-	layer.open({
-		type: 1,
-		shade: false,
-		title: false, //不显示标题
-		content: html, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-		area: ['75%', '90%'], //宽高
-		cancel: function() {
-			if(cancel != null) {
-				cancel();
-			}
-		}
+function menu_update(menuId, status) {
+	if(status == 1) {
+		status = 0;
+	} else if(status == 0) {
+		status = 1;
+	}
+	$.post("/menu/update", {
+		menuId: menuId,
+		status: status
+	}, function(obj) {
+		debugger;
+		table.ajax.reload(); //table 在main.html 里
+	});
+}
+
+function menu_del(menuId) {
+	layerOpenDel("你确定要删除吗？", function() {
+		$.post("/menu/delete", {
+			menuId: menuId,
+			status: status
+		}, function(obj) {
+			debugger;
+			table.ajax.reload(); //table 在main.html 里
+		});
 	});
 }

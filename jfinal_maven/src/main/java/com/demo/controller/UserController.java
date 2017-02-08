@@ -10,11 +10,19 @@ import com.demo.controller.model.DataTable;
 import com.demo.interceptor.BaseInterceptor;
 import com.demo.service.UserService;
 import com.demo.util.IdUtils;
+import com.demo.util.UserAgentUtil;
+import com.demo.util.useragent.UserAgent;
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserController extends BaseController {
 
@@ -22,9 +30,14 @@ public class UserController extends BaseController {
         render("add.html");
     }
 
-    public void login() {
-        MsgBean msgBean = new MsgBean();
+    public void main() {
+        render("main.html");
+    }
 
+    public void login() {
+//        String userAgentStr = getRequest().getHeader("user-agent");
+//        UserAgent userAgent = UserAgentUtil.getUserAgent(userAgentStr);
+        MsgBean msgBean = new MsgBean();
         User user = getModel(User.class, "");
         user = UserService.login(user.getUserName(), user.getPassword());
         if (user != null) {
@@ -39,6 +52,67 @@ public class UserController extends BaseController {
         renderJson(msgBean);
     }
 
+    public void getQrcode() throws UnknownHostException {
+
+        String code = IdUtils.getId();
+        long time = new Date().getTime();
+        setSessionAttr(Key.KEY_QRCODE, code);
+
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        HttpServletRequest request= getRequest();
+        String url =  request.getScheme()+"://"+inetAddress.getHostAddress()+":"+request.getServerPort()+"/app/jfinaldemo.apk";
+
+        Map<String,Object> map= new HashMap<>();
+        map.put("code",code);
+        map.put("url",url);
+        map.put("time",time);
+        renderJson(map);
+    }
+
+    public void qrcodeLoading() throws Exception {
+        String code = getPara("code");
+        MsgBean msgBean = new MsgBean();
+        int count = 20;
+        while (count > 0) {
+            String code_session = getSessionAttr(Key.KEY_QRCODE);
+            if (code.equals(code_session)) {
+                User user = UserService.qrcode(code);
+                if (user != null) {
+                    user.setPassword("******");
+                    setSessionAttr(Key.KEY_SESSION_USER, user);
+                    msgBean.setStatus(1);
+                    msgBean.setMsg("欢迎" + user.getUserName());
+                    break;
+                }
+                Thread.sleep(3000);
+                count--;
+            } else {
+                break;
+            }
+        }
+        renderJson(msgBean);
+    }
+
+    public void qrcodeLogin() throws Exception {
+        String code = getPara("code");
+        MsgBean msgBean = new MsgBean();
+        if (code != null && code.length() > 0) {
+            User user = getSessionUer();
+            if (user != null) {
+                User _user = new User();
+                _user.setUserId(user.getUserId());
+                _user.setQrcode(code);
+                _user.update();
+                msgBean.setStatus(1);
+                msgBean.setMsg("授权成功");
+            } else {
+                msgBean.setStatus(0);
+                msgBean.setMsg("授权失败");//生成的二维码已经 超时
+            }
+        }
+        renderJson(msgBean);
+    }
+
     @Before({BaseInterceptor.class})
     public void list() {
         // int page = getAttrForInt("page");
@@ -46,14 +120,14 @@ public class UserController extends BaseController {
         User user = getSessionUer();
         String userName = user.getUserName();
         if ("admin".equals(userName) || "system".equals(userName)) {
-            Page<UserInfo> userInfoPage = UserService.list(1, 10);
+            Page<Record> userInfoPage = UserService.list(1, 10);
             setAttr("userInfoPage", userInfoPage);
         }
         render("list.html");
     }
 
     public void list3() {
-        Page<UserInfo> userInfoPage = UserService.list(1, 10);
+        Page<Record> userInfoPage = UserService.list(1, 10);
         renderJson(userInfoPage);
     }
 
@@ -67,11 +141,11 @@ public class UserController extends BaseController {
             int pageNumber = databTable.getStart() / databTable.getLength() + 1;
             int pageSize = databTable.getLength();
             if (search == null || search.length() == 0) {
-                Page<UserInfo> page = UserService.list(pageNumber, pageSize);
+                Page<Record> page = UserService.list(pageNumber, pageSize);
                 databTable.setData(page.getList());
                 databTable.setRecordsTotal(page.getTotalRow());
             } else {
-                Page<UserInfo> page = UserService.listLike(pageNumber, pageSize, search);
+                Page<Record> page = UserService.listLike(pageNumber, pageSize, search);
                 databTable.setData(page.getList());
                 databTable.setRecordsTotal(page.getTotalRow());
             }
@@ -79,6 +153,10 @@ public class UserController extends BaseController {
         } else {
             renderJson();
         }
+
+    }
+
+    public void checkUserName() {
 
     }
 
@@ -146,7 +224,7 @@ public class UserController extends BaseController {
         setAttr("userInfo", userInfo);
         setAttr("user", user);
         if (type == 0) {
-            render("info.html");
+            render("info.jsp");
         } else {
             render("add.html");
         }
@@ -209,7 +287,7 @@ public class UserController extends BaseController {
     public void findByRoleIdPage2() {
         String roleId = getPara("roleId");
         DataTable dt = getDataTable();
-        Page<Record> userInfos = UserService.findByRoleId2(roleId,dt.getStart(), dt.getPageNumber(), dt.getPageSize(), dt.getSearchValue());
+        Page<Record> userInfos = UserService.findByRoleId2(roleId, dt.getStart(), dt.getPageNumber(), dt.getPageSize(), dt.getSearchValue());
         dt.setData(userInfos);
         renderJson(dt.getResponseData());
     }

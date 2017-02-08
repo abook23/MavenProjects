@@ -12,7 +12,7 @@ public class MenuService {
     public static List<Menu> list(String userId) {
         String sql;
         if (userId != null) {
-            sql = "select m.menuId,m.pId,m.name,m.url from menu m,user_menu um where um.userId = '" + userId + "' and m.menuId = um.menuId  order by createTime asc";
+            sql = "SELECT m.* from user_role ur,role_menu rm,menu m where ur.userId = '"+userId+"' AND ur.roleId = rm.roleId and rm.menuId = m.menuId and m.status='1' order by createTime asc";
         } else {
             sql = "select * from menu order by createTime asc";
         }

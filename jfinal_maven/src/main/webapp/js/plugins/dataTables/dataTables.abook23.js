@@ -34,7 +34,7 @@ function dataTable(dataTable, url, columns, dataSrc, rowCallback) {
  * @param {String} columns 	"id:false,name,phone,...."
  * @param {Function} rowCallback
  */
-function dataTableByServer(dataTable, url, columns, rowCallback) {
+function dataTableByServer(dataTable, url, columns,rowCallback) {
 	var table = $(dataTable).DataTable({
 		ordering: false, //排序
 		serverSide: true, //开启服务器模式
@@ -65,7 +65,7 @@ function getDataTableColumns(columns) {
 		var _d = d.split(":");
 		if(_d[1] == "false") {
 			_d[1] = false;
-		} else {
+		} else if(_d[1] == "true") {
 			_d[1] = true;
 		}
 		_columns[i] = {
